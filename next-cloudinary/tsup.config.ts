@@ -1,5 +1,6 @@
 import { defineConfig, Options } from 'tsup'
 import { plugin as CopyAssetsPlugin } from './plugins/copy-assets';
+import pkg from './package.json';
 
 const commonConfig: Options = {
   dts: true,
@@ -7,6 +8,10 @@ const commonConfig: Options = {
   format: ['esm', 'cjs'],
   minify: true,
   sourcemap: true,
+  // Inline the version instead of importing package.json into the bundle
+  define: {
+    __NEXT_CLOUDINARY_VERSION__: JSON.stringify(pkg.version),
+  },
 };
 
 export default defineConfig([
